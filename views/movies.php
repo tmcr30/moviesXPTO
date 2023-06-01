@@ -6,13 +6,18 @@
 <body>
     <h1>Movie List</h1>
     <ul>
-    <?php foreach ($movies as $movie): ?>
-        <li>
-            <a href="index.php?action=show&id=<?php echo $movie['id']; ?>">
-                <?php echo $movie['title']; ?>
-            </a>
-        </li>
-    <?php endforeach; ?>
-    </ul>
+    <?php
+            foreach($movies as $movie) {
+                echo '
+                        <li>
+                            <a href="/movieDetails/' .$movie["movie_id"]. '">
+                                
+                                ' .$movie["title"]. '
+                            </a>
+                        </li>
+                ';
+            }
+    ?>
 </body>
 </html>
+
