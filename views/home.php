@@ -9,7 +9,12 @@
 
   <ul>
     <li><a href="index.php?controller=movies">Browse Movies</a></li>
-    <li><a href="index.php?controller=create">Add Movie</a></li>
+    <?php if (isset($_SESSION['admin_id'])): ?>
+      <li><a href="index.php?controller=create">Add Movie</a></li>
+      <li><a href="index.php?controller=logout">Logout</a></li>
+    <?php else: ?>
+      <li><a href="index.php?controller=login">Login</a></li>
+    <?php endif; ?>
   </ul>
 </body>
 </html>

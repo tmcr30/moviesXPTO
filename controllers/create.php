@@ -1,29 +1,20 @@
 <?php
 
+require_once('models/Create.php');
+
+$model = new Create();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    
-    $title = $_POST['title'];
-    $description = $_POST['description'];
-    $releaseYear = $_POST['release_year'];
-
-    
-    if (empty($title) || empty($description) || empty($releaseYear)) {
-        die("Please fill in all the required fields.");
-    }
-
-    try {
-        $stmt = $db->prepare("INSERT INTO movies (title, description, release_year) VALUES (?, ?, ?)");
-        $stmt->execute([$title, $description, $releaseYear]);
-
+    $success = $model->createMovie($_POST);
+    if ($success) {
         
-        header("Location: index.php?action=success");
-        exit();
-    } catch (PDOException $e) {
-        die("Error storing the movie: " . $e->getMessage());
+        header('Location: index.php?controller=movies');
+        exit;
+    } else {
+        $error = "Error creating movie";
     }
-} else {
-    
-    die("Invalid request.");
 }
 
+$categories = $model->getAllCategories();
+
+require('views/create.php');

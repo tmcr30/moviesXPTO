@@ -6,18 +6,15 @@
 <body>
     <h1>Movie List</h1>
     <ul>
-    <?php
-            foreach($movies as $movie) {
-                echo '
-                        <li>
-                            <a href="/movieDetails/' .$movie["movie_id"]. '">
-                                
-                                ' .$movie["title"]. '
-                            </a>
-                        </li>
-                ';
-            }
-    ?>
+    <?php foreach ($movies as $movie): ?>
+        <li>
+            <a href="index.php?controller=movieDetails&id=<?php echo $movie['movie_id']; ?>">
+                <?php echo $movie['title']; ?>
+            </a>
+        </li>
+    <?php endforeach; ?>
+    </ul>
+
+    <a href="index.php?controller=home">Back to home</a>
 </body>
 </html>
-

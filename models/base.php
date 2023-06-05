@@ -16,6 +16,22 @@ class Base
         );
     }
 
+    public function checkAdminCredentials($username, $password)
+    {
+        $query = $this->db->prepare("
+            SELECT id
+            FROM admin
+            WHERE username = :username AND password = :password
+        ");
+
+        $query->execute([
+            ':username' => $username,
+            ':password' => $password
+        ]);
+
+        return $query->fetch();
+    }
+
 
 
 

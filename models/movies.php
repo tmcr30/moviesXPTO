@@ -14,7 +14,7 @@ class Movies extends Base
             FROM
                 movies
             INNER JOIN
-                categories USING (categorie_id)
+                categories USING (category_id)
     
         ");
 
@@ -24,20 +24,19 @@ class Movies extends Base
     }
 
     public function getMovieDetails($id) {
-
         $query = $this->db->prepare("
             SELECT
-                movie_id, title, description, 
-                release_date, categorie_id
-            FROM movies
-            WHERE movie_id = ?
+                m.movie_id, m.title, m.description, m.release_date, c.name
+            FROM movies AS m
+            INNER JOIN categories AS c ON m.category_id = c.category_id
+            WHERE m.movie_id = :id
         ");
-
+    
         $query->execute([
-            $id
+            ':id' => $id
         ]);
-
+    
         return $query->fetch();
-
     }
+    
 }

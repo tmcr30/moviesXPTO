@@ -1,9 +1,16 @@
 <?php
+
 session_start();
 
 define("ENV", parse_ini_file(".env"));
 
 $controller = "home";
+
+$allowed_controllers = [
+    "home", "movies", "movieDetails",
+    "create"
+
+];
 
 if (isset($_GET["controller"])) {
     $controller = $_GET["controller"];
