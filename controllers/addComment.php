@@ -13,8 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['movie_id']) && isset(
     $result = $model->addComment($movieId, $userId, $comment);
 
     if ($result) {
-        
-        
         header("Location: index.php?controller=movieDetails&id=$movieId");
         exit();
     } else {

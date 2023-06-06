@@ -24,6 +24,7 @@
                 <input type="submit" value="Delete Movie">
             </form>
         <?php endif; ?>
+        <br>
 
         <?php
             $model = new Movies();
@@ -48,7 +49,6 @@
             </form>
         <?php endif; ?>
 
-        
         <br>
         <?php if (isset($_SESSION['user_id'])): ?>
             <form action="index.php?controller=movieDetails&id=<?php echo $movie['movie_id']; ?>" method="POST">
@@ -67,15 +67,19 @@
         <ul>
             <?php foreach ($comments as $comment): ?>
                 <li>
+                    <br>
                     <strong>User:</strong> <?php echo $comment['username']; ?><br>
                     <strong>Comment:</strong> <?php echo $comment['comment_text']; ?><br>
                     <em>Posted at: <?php echo $comment['created_at']; ?></em>
+                    <br>
                     <?php if (isset($_SESSION['admin_id'])): ?>
                         <form action="index.php?controller=deleteComment" method="POST" onsubmit="return confirm('Are you sure you want to delete this comment?');">
                             <input type="hidden" name="movie_id" value="<?php echo $movie['movie_id']; ?>">
                             <input type="hidden" name="comment_id" value="<?php echo $comment['comment_id']; ?>">
+                            <br>
                             <input type="submit" value="Delete Comment">
                         </form>
+                        <br>
                     <?php endif; ?>
                 </li>
             <?php endforeach; ?>
