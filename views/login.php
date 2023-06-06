@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Login</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <h1>Login</h1>
@@ -17,8 +18,9 @@
         
         <input type="submit" value="Login">
     </form>
-
-
+    <br>
+    <a href="index.php?controller=registration">Sign Up</a>
+    <br>
     <a href="index.php?controller=home">Back to home</a>
 </body>
 </html>

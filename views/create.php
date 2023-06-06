@@ -2,10 +2,11 @@
 <html>
 <head>
     <title>Insert Movie</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <h1>Insert Movie</h1>
-    <form id="movie_form" action="index.php?controller=create" method="POST">
+    <form id="movie_form" action="index.php?controller=create" method="POST" enctype="multipart/form-data">
         <label for="title">Title:</label>
         <input type="text" name="title" id="title" required><br>
         
@@ -23,6 +24,9 @@
                 </option>
             <?php endforeach; ?>
         </select><br>
+
+        <label for="poster">Poster:</label>
+        <input type="file" name="poster" id="poster" accept="image/*" required><br>
         
         <input type="submit" value="Create">
     </form>

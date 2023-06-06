@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Movie List</title>
+    <link rel="stylesheet" href="css/movieList.css">
 </head>
 <body>
     <h1>Movie List</h1>

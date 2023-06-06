@@ -1,21 +1,28 @@
 <?php
 
-$id = $_GET['id'];
+require_once('models/base.php');
+require_once("models/movies.php");
 
-if (!isset($id) || !is_numeric($id)) {
-    http_response_code(400);
-    die("Request inválido");
+$model = new Base();
+$movieId = $_GET['id'];
+$movie = $model->getMovieById($movieId);
+$comments = $model->getCommentsByMovieId($movieId);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['movie_id']) && isset($_POST['comment'])) {
+    $commentMovieId = $_POST['movie_id'];
+    $comment = $_POST['comment'];
+
+    $userId = $_SESSION['user_id'];
+
+    
+    $result = $model->addComment($commentMovieId, $userId, $comment);
+
+    if ($result) {
+        header("Location: index.php?controller=movieDetails&id=$commentMovieId");
+        exit();
+    } else {
+        echo "Failed to add comment.";
+    }
 }
 
-require("models/movies.php");
-
-$model = new Movies();
-
-$movie = $model->getMovieDetails($_GET['id']);
-
-if (empty($movie)) {
-    http_response_code(404);
-    die("Página não existe");
-}
-
-require("views/movieDetails.php");
+require('views/movieDetails.php');
