@@ -129,5 +129,63 @@ class Movies extends Base
         $result = $query->fetch();
         return $result['average_rating'] ?? 0;
     }
+
+    public function searchMovies($query)
+    {
+        $query = "%$query%";
+        $statement = $this->db->prepare("
+            SELECT
+                movie_id,
+                title
+            FROM
+                movies
+            INNER JOIN
+                categories USING (category_id)
+            WHERE
+                title LIKE :query
+            ORDER BY
+                title ASC
+        ");
+
+        $statement->execute([
+            ':query' => $query
+        ]);
+
+        return $statement->fetchAll();
+    }
+
+    public function getAllCategories() {
+        $query = $this->db->prepare("
+            SELECT category_id, name
+            FROM categories
+        ");
+    
+        $query->execute();
+    
+        return $query->fetchAll();
+    }
+
+        public function getMoviesByCategory($category)
+    {
+        $query = $this->db->prepare("
+            SELECT
+                m.movie_id,
+                m.title
+            FROM
+                movies AS m
+            INNER JOIN
+                categories AS c ON m.category_id = c.category_id
+            WHERE
+                c.name = :category
+            ORDER BY
+                m.title ASC
+        ");
+
+        $query->execute([
+            ':category' => $category
+        ]);
+
+        return $query->fetchAll();
+    }
 }   
     

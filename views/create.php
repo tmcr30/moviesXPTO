@@ -1,3 +1,13 @@
+<?php
+
+if (!isset($_SESSION['admin_id'])) {
+    
+    header("Location: index.php?controller=home");
+    exit();
+}
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>

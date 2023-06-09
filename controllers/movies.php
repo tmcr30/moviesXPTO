@@ -4,21 +4,12 @@ require("models/movies.php");
 
 $model = new Movies();
 
-$movies = $model->getAllMovies();
-
-if( empty($movies) ) {
-    http_response_code(404);
-    die("Página não existe");
-}
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['movie_id']) && isset($_POST['rating'])) {
     $movieId = $_POST['movie_id'];
     $ratingValue = $_POST['rating'];
 
-    $model = new Movies();
     $userId = $_SESSION['user_id'];
 
-    
     $result = $model->addRating($movieId, $userId, $ratingValue);
 
     if ($result) {
@@ -29,13 +20,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['movie_id']) && isset(
     }
 }
 
-$controller = new Movies();
 
-if (isset($_GET['action']) && $_GET['action'] === 'rateMovie') {
-    $controller->rateMovie();
+$categories = $model->getAllCategories();
+
+if (isset($_GET['category'])) {
+    $category = $_GET['category'];
+    $movies = $model->getMoviesByCategory($category);
 } else {
-    $controller->getAllMovies();
+    $movies = $model->getAllMovies();
 }
 
-require("views/movies.php");
+if (empty($movies)) {
+    http_response_code(404);
+    die("Página não existe");
+}
 
+
+if (isset($_GET['search'])) {
+    $searchQuery = $_GET['search'];
+    $movies = $model->searchMovies($searchQuery);
+} else if (isset($_GET['category'])) {
+    $category = $_GET['category'];
+    $movies = $model->getMoviesByCategory($category);
+} else {
+    $movies = $model->getAllMovies();
+}
+
+if (empty($movies)) {
+    http_response_code(404);
+    die("No movies found");
+}
+
+
+ob_start();
+require("views/movies.php");
+$output = ob_get_clean();
+
+echo $output;

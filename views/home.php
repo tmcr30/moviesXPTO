@@ -19,7 +19,9 @@
   <?php endif; ?>
   </ul>
 
+  
   <div class="random_movies">
+  <h2>Movies Suggestion</h2>
     <?php foreach ($randomMovies as $movie): ?>
       <div class="random_poster">
         <p></p>
